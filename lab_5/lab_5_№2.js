@@ -1,12 +1,16 @@
-let summ = 53253;
-let numOfGoods = 63;
+let summ = 10;
+let numOfGoods = 1;
 let promo = "ДАРИМ300";
 
 discounts(summ, numOfGoods, promo);
 
 function promo1(summ) {
   console.log("Промокод 'ДАРИМ300' введен, применена скидка в 300р");
-  return summ - 300;
+  if (summ > 300) {
+    return summ - 300;
+  } else if (summ <= 300) {
+    return 0;
+  }
 }
 
 function numsOfGoods(summ) {
