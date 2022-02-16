@@ -11,7 +11,7 @@ for (let i = 0; i < 31; i++) {
 console.log(month);
 
 for (i = 0; i < days.length; i++) {
-    if (i == firstDay ) {
+    if (i == firstDay) {
         numberOfDay = i + 1; 
         break;
     }

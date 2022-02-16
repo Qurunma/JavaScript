@@ -4,6 +4,7 @@ function filter({ name }, needName) {
       return objIs;
     }
   }
+  return "Такого имени нет.........    :(";
 }
 
 let objects = [
