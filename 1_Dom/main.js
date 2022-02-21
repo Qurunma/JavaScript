@@ -5,13 +5,16 @@ for (let index = 0; index < 6; index++) {
     label: `Вариант выбора ${index + 1}`,
   };
 }
-let selected = document.createElement("select");
-let selectReady = initialisatorOpt(arrayOpt);
+let valueNeed = 3;
+let selectded = document.createElement("select");
+let selectReady = initialisatorOpt(arrayOpt, valueNeed);
 
 document.body.append(selectReady);
 
-function initialisatorOpt(arrayOpt) {
+function initialisatorOpt(arrayOpt, valueNeed = 0) {
   let optArr = [];
+  let valueNeeded = "co" + String(valueNeed);
+  console.log(valueNeeded);
   for (let index in arrayOpt) {
     optArr[index] = document.createElement("option");
   }
@@ -21,8 +24,13 @@ function initialisatorOpt(arrayOpt) {
     optArr[index].value = arrayOpt[index].value;
   }
   for (let index in optArr) {
-    selected.append(optArr[index]);
+    selectded.append(optArr[index]);
   }
-  // seleeect.append
-  return selected;
+  for (let index in optArr) {
+    if (selectded.options[index].value == valueNeeded) {
+      selectded.selectedIndex = index;
+      console.log(selectded.selectedIndex);
+    }
+  }
+  return selectded;
 }
