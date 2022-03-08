@@ -19,30 +19,33 @@
   margin-top: 140px;
   margin-left: 50px;
 }
-/* #square1 {
-  background-color: red;
-  width: 200px;
-  height: 200px;
-}
-#square2 {
-  background-color: red;
-  width: 200px;
-  height: 200px;
-}
-#square3 {
-  background-color: red;
-  width: 200px;
-  height: 200px;
-  margin-left: 300px;
-  margin-top: -432px;
-}
-#square4 {
-  background-color: red;
-  width: 200px;
-  height: 200px;
-  margin-left: 300px;
-}
 #num8 {
-  width: 1000px;
-  height: 600px;
-} */
+  width: 500px;
+  height: 410px;
+}
+#firstBlocks {
+  margin: 10px;
+}
+#secondBlocks {
+  margin-left: 120px;
+  margin-top: -220px;
+}
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  margin-top: 10px;
+}
+#num9 {
+  width: 200px;
+  height: 150px;
+}
+.inputer {
+  margin: 4px;
+}
+#buttons {
+  margin: 20px;
+}
+#output {
+  margin-top: 0px;
+}
