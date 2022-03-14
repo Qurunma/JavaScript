@@ -1,12 +1,21 @@
-const inputTime = document.querySelector(".input");
+const inputMinutes = document.querySelector(".inputMinutes");
+const inputSeconds = document.querySelector(".inputSeconds");
 const buttonSend = document.querySelector(".button");
 const buttonStop = document.querySelector(".buttonStop");
 let work = false;
 
 function timer() {
-  if (inputTime.value > 0) {
-    let time = inputTime.value - 1;
-    inputTime.value = time;
+  if (inputMinutes.value > 0) {
+    if (inputSeconds.value > 0) {
+      let seconds = inputSeconds.value - 1;
+      inputSeconds.value = seconds;
+    } else {
+      inputMinutes.value = inputMinutes.value - 1;
+      inputSeconds.value = 59;
+    }
+  } else if (inputSeconds.value >= 0 && inputMinutes.value == 0) {
+    let seconds = inputSeconds.value - 1;
+    inputSeconds.value = seconds;
   } else {
     clearInterval(intId);
     work = false;
@@ -14,9 +23,17 @@ function timer() {
 }
 
 buttonSend.addEventListener("click", () => {
-  if (work !== true && Number(inputTime.value)) {
+  if (
+    work !== true &&
+    Number(inputMinutes.value) &&
+    (Number(inputSeconds.value) ||
+      inputSeconds.value == "" ||
+      Number(inputSeconds.value) != Number)
+  ) {
     work = true;
     intId = setInterval(timer, 1000);
+  } else {
+    alert("Incorrect input or program work now");
   }
 });
 
