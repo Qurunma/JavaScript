@@ -1,0 +1,36 @@
+.container {
+  justify-content: center;
+}
+.form {
+  width: 1271px;
+  display: inline-flex;
+}
+.button {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.inputer {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 1155px;
+}
+.element {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 1271px;
+  margin-block: 0px;
+  border: 1px solid black;
+}
+.buttons {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 448 px;
+}
+.textOfMission {
+  vertical-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-block: 0px;
+  /* font-size: 17px; */
+}
