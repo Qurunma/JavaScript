@@ -115,13 +115,8 @@ let masToJson = [];
           text: p.textContent,
           ready: elements[indexLi].ready,
         };
-      } else {
-        const filtered = JSON.parse(localStorage.getItem("todoshka")).splice(
-          i - 1,
-          1
-        );
-        localStorage.setItem("todoshka", JSON.stringify(filtered));
       }
+      localStorage.clear();
     }
   }
 
