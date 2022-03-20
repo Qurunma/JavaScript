@@ -22,15 +22,17 @@
   border: 1px solid black;
 }
 .buttons {
+  text-align: right;
   margin-left: auto;
   margin-top: auto;
   margin-bottom: auto;
-  width: 448 px;
+  width: 448px;
 }
 .textOfMission {
+  word-break: break-all;
   vertical-align: center;
   margin-top: auto;
   margin-bottom: auto;
   margin-block: 0px;
-  /* font-size: 17px; */
+  width: 823px;
 }
