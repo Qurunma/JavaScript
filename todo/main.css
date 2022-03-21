@@ -15,7 +15,7 @@
   width: 1155px;
 }
 .element {
-  display: inline-block;
+  display: inline-flex;
   justify-content: space-between;
   width: 1271px;
   margin-block: 0px;
@@ -25,6 +25,7 @@
   vertical-align: auto;
   text-align: right;
   margin-left: auto;
+  margin-right: 0px;
   margin-top: auto;
   margin-bottom: auto;
   width: 448px;
@@ -36,4 +37,7 @@
   margin-bottom: auto;
   margin-block: 0px;
   width: 823px;
+}
+.deleteAll {
+  float: right;
 }

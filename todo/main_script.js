@@ -5,10 +5,23 @@ let masToJson = [];
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
     const div = document.querySelector(".container");
+    const deleteAll = document.createElement("button");
+
     div.append(createAppTitle());
     div.append(createTodoItemForm());
     div.append(createTodoList());
     initLocalAStorage();
+
+    deleteAll.textContent = "Удалить все записи";
+    deleteAll.className = "deleteAll btn waves-effect waves-light red";
+    deleteAll.style.display = "none";
+    deleteAll.addEventListener("click", () => {
+      const ul = document.querySelector(".ul");
+      masToJson.splice(0);
+      ul.innerHTML = "";
+      deleteAll.style.display = "none";
+    });
+    div.append(deleteAll);
   });
 
   let work = false;
@@ -47,8 +60,17 @@ let masToJson = [];
     button.className = "button btn waves-effect waves-light";
     button.id = "button";
     button.textContent = "Внести запись";
+    button.setAttribute("disabled", true);
 
     button.addEventListener("click", createTodoItem);
+
+    input.addEventListener("input", () => {
+      if (input.value === "") {
+        button.setAttribute("disabled", true);
+      } else {
+        button.removeAttribute("disabled");
+      }
+    });
 
     return forma;
   }
@@ -132,6 +154,7 @@ let masToJson = [];
       const buttonReady = document.createElement("button");
       const buttonDelete = document.createElement("button");
       const indexLi = index;
+      const deleteAll = document.querySelector(".deleteAll");
 
       li.className = "element";
       buttonReady.className =
@@ -143,6 +166,7 @@ let masToJson = [];
       div.className = "buttons";
       p.className = "textOfMission";
       p.textContent = input.value;
+      deleteAll.style.display = "block";
 
       ul.append(li);
       li.append(p);
@@ -167,6 +191,8 @@ let masToJson = [];
         li.remove();
         delete masToJson[indexLi];
       });
+
+      console.log(document.querySelector(".deleteAll"));
 
       masToJson[indexLi] = { text: p.textContent, ready: work };
 
