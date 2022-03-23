@@ -1,7 +1,32 @@
 "use strict";
 
-let masToJson = [];
+import { initLocalStorage, masToJson } from "./script/initLocal.js";
 
+let index;
+if (
+  JSON.parse(
+    localStorage.getItem("myTodoshka") !== null &&
+      document.head.querySelector(".name").textContent == "for son"
+  )
+) {
+  index = JSON.parse(localStorage.getItem("myTodoshka")).length;
+} else if (
+  JSON.parse(
+    localStorage.getItem("momTodoshka") !== null &&
+      document.head.querySelector(".name").textContent == "for mom"
+  )
+) {
+  index = JSON.parse(localStorage.getItem("momTodoshka")).length;
+} else if (
+  JSON.parse(
+    localStorage.getItem("dadTodoshka") !== null &&
+      document.head.querySelector(".name").textContent == "for dad"
+  )
+) {
+  index = JSON.parse(localStorage.getItem("dadTodoshka")).length;
+} else {
+  index = 0;
+}
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
     const div = document.querySelector(".container");
@@ -10,7 +35,7 @@ let masToJson = [];
     div.append(createAppTitle());
     div.append(createTodoItemForm());
     div.append(createTodoList());
-    initLocalAStorage();
+    initLocalStorage();
 
     deleteAll.textContent = "Удалить все записи";
     deleteAll.className = "deleteAll btn waves-effect waves-light red";
@@ -25,7 +50,6 @@ let masToJson = [];
   });
 
   let work = false;
-  let index = JSON.parse(localStorage.getItem("todoshka")).length;
 
   function createAppTitle() {
     const h1 = document.createElement("h1");
@@ -79,67 +103,6 @@ let masToJson = [];
     const ul = document.createElement("ul");
     ul.className = "ul";
     return ul;
-  }
-
-  function initLocalAStorage() {
-    const elements = JSON.parse(localStorage.getItem("todoshka"));
-    for (let i = 0; i < elements.length; i++) {
-      if (elements[i] !== null) {
-        const li = document.createElement("li");
-        const ul = document.querySelector(".ul");
-        const div = document.createElement("div");
-        const p = document.createElement("p");
-        const buttonReady = document.createElement("button");
-        const buttonDelete = document.createElement("button");
-        const indexLi = i;
-
-        li.className = "element";
-        buttonReady.className =
-          "buttonReady waves-effect waves-light btn-small green";
-        buttonReady.textContent = "Пометить задачу как выполненную";
-        buttonDelete.className =
-          "buttonDelete waves-effect waves-light btn-small red";
-        buttonDelete.textContent = "Удалить задачу";
-        div.className = "buttons";
-        p.className = "textOfMission";
-        p.textContent = elements[indexLi].text;
-
-        ul.append(li);
-        li.append(p);
-        li.append(div);
-        div.append(buttonReady);
-        div.append(buttonDelete);
-
-        console.dir(li);
-
-        if (elements[indexLi].ready) {
-          li.style.backgroundColor = "lightgreen";
-        }
-
-        buttonReady.addEventListener("click", (e) => {
-          if (li.style.backgroundColor == "lightgreen") {
-            li.style.backgroundColor = "";
-            work = false;
-            masToJson[indexLi] = { text: p.textContent, ready: work };
-          } else {
-            li.style.backgroundColor = "lightgreen";
-            work = true;
-            masToJson[indexLi] = { text: p.textContent, ready: work };
-          }
-        });
-        buttonDelete.addEventListener("click", (e) => {
-          console.log(indexLi);
-          li.remove();
-          delete masToJson[indexLi];
-        });
-
-        masToJson[indexLi] = {
-          text: p.textContent,
-          ready: elements[indexLi].ready,
-        };
-      }
-      localStorage.clear();
-    }
   }
 
   function createTodoItem(event) {
@@ -208,7 +171,15 @@ let masToJson = [];
   }
 
   window.addEventListener("beforeunload", () => {
-    localStorage.removeItem("todoshka");
-    localStorage.setItem("todoshka", JSON.stringify(masToJson));
+    if (document.head.querySelector(".name").textContent == "for son") {
+      localStorage.removeItem("myTodoshka");
+      localStorage.setItem("myTodoshka", JSON.stringify(masToJson));
+    } else if (document.head.querySelector(".name").textContent == "for mom") {
+      localStorage.removeItem("momTodoshka");
+      localStorage.setItem("momTodoshka", JSON.stringify(masToJson));
+    } else if (document.head.querySelector(".name").textContent == "for dad") {
+      localStorage.removeItem("dadTodoshka");
+      localStorage.setItem("dadTodoshka", JSON.stringify(masToJson));
+    }
   });
 })();
