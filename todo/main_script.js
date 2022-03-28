@@ -1,6 +1,6 @@
 "use strict";
 
-import { initLocalStorage, masToJson } from "./script/initLocal.js";
+import { initLocal, masToJson } from "./script/initLocal.js";
 
 let index;
 if (
@@ -35,7 +35,7 @@ if (
     div.append(createAppTitle());
     div.append(createTodoItemForm());
     div.append(createTodoList());
-    initLocalStorage();
+    initLocal();
 
     deleteAll.textContent = "Удалить все записи";
     deleteAll.className = "deleteAll btn waves-effect waves-light red";
