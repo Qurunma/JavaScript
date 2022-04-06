@@ -1,33 +1,19 @@
 "use strict";
 
-import { initLocal, masToJson } from "./script/initLocal.js";
-
-let index;
-if (
-  JSON.parse(
-    localStorage.getItem("myTodoshka") !== null &&
-      document.head.querySelector(".name").textContent == "for son"
-  )
-) {
-  index = JSON.parse(localStorage.getItem("myTodoshka")).length;
-} else if (
-  JSON.parse(
-    localStorage.getItem("momTodoshka") !== null &&
-      document.head.querySelector(".name").textContent == "for mom"
-  )
-) {
-  index = JSON.parse(localStorage.getItem("momTodoshka")).length;
-} else if (
-  JSON.parse(
-    localStorage.getItem("dadTodoshka") !== null &&
-      document.head.querySelector(".name").textContent == "for dad"
-  )
-) {
-  index = JSON.parse(localStorage.getItem("dadTodoshka")).length;
-} else {
-  index = 0;
-}
+let index = 0;
 (function () {
+  let localKey;
+  if (document.head.querySelector(".name").textContent == "for son") {
+    localKey = "myTodoshka";
+  } else if (document.head.querySelector(".name").textContent == "for mom") {
+    localKey = "momTodoshka";
+  } else {
+    localKey = "dadTodoshka";
+  }
+
+  const masToJson = JSON.parse(localStorage.getItem(localKey)) || [];
+  masToJson;
+  localKey;
   document.addEventListener("DOMContentLoaded", () => {
     const div = document.querySelector(".container");
     const deleteAll = document.createElement("button");
@@ -35,7 +21,6 @@ if (
     div.append(createAppTitle());
     div.append(createTodoItemForm());
     div.append(createTodoList());
-    initLocal();
 
     deleteAll.textContent = "Удалить все записи";
     deleteAll.className = "deleteAll btn waves-effect waves-light red";
@@ -47,9 +32,13 @@ if (
       deleteAll.style.display = "none";
     });
     div.append(deleteAll);
-  });
 
-  let work = false;
+    if (masToJson != null) {
+      for (let index = 0; index < masToJson.length; index++) {
+        createTodoItem(masToJson[index]);
+      }
+    }
+  });
 
   function createAppTitle() {
     const h1 = document.createElement("h1");
@@ -86,7 +75,10 @@ if (
     button.textContent = "Внести запись";
     button.setAttribute("disabled", true);
 
-    button.addEventListener("click", createTodoItem);
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      createTodoItem();
+    });
 
     input.addEventListener("input", () => {
       if (input.value === "") {
@@ -105,10 +97,8 @@ if (
     return ul;
   }
 
-  function createTodoItem(event) {
-    event.preventDefault();
-    let ready = confirm("Вы уверены, что хотите внести данную запись?");
-    if (ready && input.value != "") {
+  function createTodoItem(item) {
+    if (input.value != "" || (item != null && item.text)) {
       const li = document.createElement("li");
       const ul = document.querySelector(".ul");
       const input = document.querySelector(".input");
@@ -128,10 +118,17 @@ if (
       buttonDelete.textContent = "Удалить задачу";
       div.className = "buttons";
       p.className = "textOfMission";
-      p.textContent = input.value;
+      p.textContent = input.value || item.text;
+      input.value = "";
+      document.getElementById("button").setAttribute("disabled", "true");
       deleteAll.style.display = "block";
 
-      ul.append(li);
+      if (item && item.ready) {
+        li.style.backgroundColor = "lightgreen";
+        masToJson[indexLi] = { text: p.textContent, ready: true };
+      }
+
+      ul.prepend(li);
       li.append(p);
       li.append(div);
       div.append(buttonReady);
@@ -140,45 +137,38 @@ if (
       buttonReady.addEventListener("click", (e) => {
         if (li.style.backgroundColor == "lightgreen") {
           li.style.backgroundColor = "";
-          work = false;
-          masToJson[indexLi] = { text: p.textContent, ready: work };
-          s;
-        } else {
+          item.ready;
+          masToJson[indexLi] = { text: p.textContent, ready: false };
+        } else if (li.style.backgroundColor == "") {
           li.style.backgroundColor = "lightgreen";
-          work = true;
-          masToJson[indexLi] = { text: p.textContent, ready: work };
+          masToJson[indexLi] = { text: p.textContent, ready: true };
         }
       });
       buttonDelete.addEventListener("click", (e) => {
-        console.log(indexLi);
+        indexLi;
         li.remove();
         delete masToJson[indexLi];
+        if (ul.innerHTML == "") {
+          deleteAll.style.display = "none";
+        }
       });
 
-      console.log(document.querySelector(".deleteAll"));
+      document.querySelector(".deleteAll");
 
-      masToJson[indexLi] = { text: p.textContent, ready: work };
+      masToJson[indexLi] = { text: p.textContent, ready: false };
 
-      console.log(masToJson[index]);
+      masToJson[index];
 
       index++;
-    } else if (input.value == "" && ready) {
-      alert("Невозможно создать пустую запись.");
-    } else {
-      alert("Ввод отменен.");
     }
-    console.log(masToJson);
   }
 
   window.addEventListener("beforeunload", () => {
     if (document.head.querySelector(".name").textContent == "for son") {
-      localStorage.removeItem("myTodoshka");
       localStorage.setItem("myTodoshka", JSON.stringify(masToJson));
     } else if (document.head.querySelector(".name").textContent == "for mom") {
-      localStorage.removeItem("momTodoshka");
       localStorage.setItem("momTodoshka", JSON.stringify(masToJson));
     } else if (document.head.querySelector(".name").textContent == "for dad") {
-      localStorage.removeItem("dadTodoshka");
       localStorage.setItem("dadTodoshka", JSON.stringify(masToJson));
     }
   });
